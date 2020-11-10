@@ -1,24 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import Task from "./Components/Task/index";
+/* import ContextArr from "./Components/ContextArr/index"; */
 
 function App() {
+  const [arr, setArr] = useState('');
+  const [arrTest, setArrTest] = useState([]);
+
+  function onSubmitInput(event){
+    if(arr.trim() !== ''){
+      setArrTest(arrTest.concat(arr));
+      setArr('');
+    }
+    event.preventDefault();
+  }
+
+  function handleSubmit(event) {
+    let newValue = event.target.value;
+    if(newValue.trim() !== ''){
+      console.log(newValue);
+        setArr(newValue);
+    }
+    event.preventDefault();
+  }
+  console.log(arrTest);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  /*  <ContextArr.Provider value={arr}>  */
+       <React.Fragment>
+          < Task  
+              onSubmitInput={onSubmitInput}
+              handleSubmit={handleSubmit}
+              value={arr}
+            />
+          {/* <TaskItem /> */}
+        </React.Fragment>
+   /* </ContextArr.Provider> */
   );
 }
 
