@@ -2,10 +2,10 @@ import React from 'react';
 import InputMain from '../InputMain/index';
 
 
-const Task = ({onSubmitInput, handleSubmit, value}) => {
+const Task = ({className, onSubmitInput, handleSubmit, value}) => {
    
     return (
-        <div className="Task-wrapper">
+        <div className={className}>
             < InputMain 
                 className={'InputMain'} 
                 onSubmitInput={onSubmitInput} 

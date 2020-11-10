@@ -20,7 +20,7 @@ const InputMain = ({ className, onSubmitInput, handleSubmit, value}) => {
     
     return (
         <div className={className}> 
-            <form onSubmit={(e) => onSubmitInput(e)} >
+            <form onSubmit={onSubmitInput} >
                    <InputText value={value} handleSubmit={handleSubmit}/>
             </form>
         </div>

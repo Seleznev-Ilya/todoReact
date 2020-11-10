@@ -1,38 +1,36 @@
 import React, {useState} from 'react';
 import Task from "./Components/Task/index";
+import Store from "./Components/Store/index";
 /* import ContextArr from "./Components/ContextArr/index"; */
 
 function App() {
   const [arr, setArr] = useState('');
-  const [arrTest, setArrTest] = useState([]);
+  const store = new Store('test');
 
   function onSubmitInput(event){
+    event.preventDefault();
     if(arr.trim() !== ''){
-      setArrTest(arrTest.concat(arr));
+      store.sync([arr]);
       setArr('');
     }
-    event.preventDefault();
   }
-
+  
   function handleSubmit(event) {
-    let newValue = event.target.value;
-    if(newValue.trim() !== ''){
-      console.log(newValue);
-        setArr(newValue);
-    }
     event.preventDefault();
+    let newValue = event.target.value;
+        setArr(newValue); 
   }
-  console.log(arrTest);
 
   return (
   /*  <ContextArr.Provider value={arr}>  */
        <React.Fragment>
           < Task  
+              className={'InputMain'} 
               onSubmitInput={onSubmitInput}
               handleSubmit={handleSubmit}
               value={arr}
             />
-          {/* <TaskItem /> */}
+
         </React.Fragment>
    /* </ContextArr.Provider> */
   );
