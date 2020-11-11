@@ -1,5 +1,5 @@
-import React from 'react';
+import React from 'react'
 
-const ContextArr= React.createContext()
+const ContextArr = React.createContext()
 
 export default ContextArr
