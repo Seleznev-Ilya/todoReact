@@ -1,0 +1,48 @@
+.todoApp {
+    border-radius: 4px;
+    box-shadow: 0 0 3px rgba(112, 112, 112, 0.5);
+    width: fit-content;
+    margin: 3vh auto 0;
+    padding: 1px;
+
+    .task_wrapper {
+        .task_input {
+            width: inherit;
+            display: flex;
+
+            .input_imgWrapper {
+                max-height: 30px;
+                padding: 0;
+
+                .input_img {
+                    cursor: pointer;
+                    width: 29px;
+                    height: auto;
+                    padding: 1px 0 4px 4px;
+                }
+            }
+
+            .input {
+                input {
+                    border: 0;
+                    border-radius: 4px;
+                    outline: none;
+                    padding: 3px;
+                    font-size: 18px;
+                    font-family: 'ubunto i', sans-serif;
+                }
+                input::placeholder {
+                    color: lightgrey;
+                    opacity: 0.4;
+                }
+            }
+        }
+    }
+
+    .todoApp-list {
+        font-family: 'ubunto r', sans-serif;
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: center;
+    }
+}
