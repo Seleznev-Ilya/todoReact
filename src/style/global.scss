@@ -4,21 +4,6 @@
     margin: 0;
 }
 
-.hide {
-    display: none;
-}
-.opasity {
-    opacity: 0;
-}
-h1 {
-    font-family: 'ubunto r', sans-serif;
-    margin: 7vh auto 0;
-    text-align: center;
-}
-.border_bottom {
-    border-bottom: 1px solid rgba(112, 112, 112, 0.2);
-}
-
 @font-face {
     font-family: 'ubunto r';
     font-style: normal;
@@ -38,4 +23,20 @@ h1 {
     font-style: normal;
     font-weight: 400;
     src: url('../fonts/Ubuntu-Light.ttf');
+}
+
+.hide {
+    display: none !important;
+}
+.opasity {
+    opacity: 0;
+}
+h1 {
+    font-family: 'ubunto r', sans-serif;
+    margin: 7vh auto 0;
+    text-align: center;
+    font-size: 1.5em;
+}
+.border_bottom {
+    border-bottom: 1px solid rgba(112, 112, 112, 0.2);
 }

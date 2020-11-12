@@ -19,14 +19,16 @@ const SelectAllButton = ({ className }) => {
         >
             <img
                 src={select}
+                alt="select"
                 className={
-                    ishide ? 'input_img select ' : 'input_img select hide'
+                    ishide ? 'input__img select ' : 'input__img select hide'
                 }
             />
             <img
                 src={unselect}
+                alt="unselect"
                 className={
-                    ishide ? 'input_img unselect hide' : 'input_img unselect '
+                    ishide ? 'input__img unselect hide' : 'input__img unselect '
                 }
             />
         </div>

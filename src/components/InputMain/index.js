@@ -8,7 +8,7 @@ const InputMain = ({ className, onSubmitInput, handleSubmit, value }) => {
             <form onSubmit={onSubmitInput}>
                 <InputText
                     value={value}
-                    holder="what need to be done"
+                    holder="what need to be done ?"
                     handleSubmit={handleSubmit}
                 />
             </form>

@@ -32,7 +32,10 @@ const MainPage = () => {
     let storeIsNull
     if (store.getStore()) {
         storeIsNull = (
-            <ItemsList className={'todoApp-list'} items={store.getStore()} />
+            <ItemsList
+                className={'todoApp__itemlist'}
+                items={store.getStore()}
+            />
         )
     } else {
         storeIsNull = null
@@ -42,9 +45,9 @@ const MainPage = () => {
         <>
             <h1>Todo list</h1>
             <div className={'todoApp'}>
-                <div className="task_wrapper">
+                <div className="task__wrapper">
                     <Task
-                        className={'task_input'}
+                        className={'task__input'}
                         onSubmitInput={onSubmitInput}
                         handleSubmit={handleSubmit}
                         value={todo}
