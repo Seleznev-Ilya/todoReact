@@ -54,6 +54,10 @@ const MainPage = () => {
                     />
 
                     {storeIsNull}
+
+                    <div>
+                        <i>filters wil be here</i>
+                    </div>
                 </div>
             </div>
         </>

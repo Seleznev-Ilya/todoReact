@@ -4,13 +4,14 @@ import select from '../../images/select.svg'
 import unselect from '../../images/unselect.svg'
 import Store from '../../store/index'
 
-const SelectAllButton = ({ className }) => {
-    const [ishide, setIsHide] = useState(true)
+const SelectAllButton = ({ className, handleSwitchImg, ishide }) => {
+    // const [ishide, setIsHide] = useState(true)
     const store = new Store('Storage')
 
-    const handleSwitchImg = () => {
-        setIsHide(!ishide)
-    }
+    // const handleSwitchImg = () => {
+    //     store.selectAllItems()
+    //     setIsHide(!ishide)
+    // }
 
     return (
         <div

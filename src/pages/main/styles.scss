@@ -3,7 +3,7 @@
     box-shadow: 0 0 3px rgba(112, 112, 112, 0.5);
     max-width: 390px;
     margin: 3vh auto 0;
-    padding: 1px;
+    padding: 4px 3px 0 3px;
 
     .task__wrapper {
         .task__input {
@@ -45,6 +45,19 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        input {
+            border: 0 solid transparent;
+            outline: none;
+            font-family: 'ubunto r', sans-serif;
+            padding: 6px 1px;
+            margin: 0 35px;
+            font-size: 16px;
+            width: -webkit-fill-available;
+        }
+
+        .item__style {
+            min-height: 37px;
+        }
         .item {
             display: flex;
             justify-content: space-between;
