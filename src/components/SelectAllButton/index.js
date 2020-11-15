@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import select from '../../images/select.svg'
 import unselect from '../../images/unselect.svg'

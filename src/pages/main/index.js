@@ -6,8 +6,11 @@ import Store from '../../store/index'
 import './styles.scss'
 
 const MainPage = () => {
-    const [todo, setTodo] = useState('')
     const store = new Store('Storage')
+    const [todo, setTodo] = useState('')
+
+    const [ishide, setIsHide] = useState(store.getStore())
+    const [todoStore, setTodoStore] = useState(store.getStore())
 
     const onSubmitInput = (event) => {
         event.preventDefault()
@@ -29,16 +32,30 @@ const MainPage = () => {
         setTodo(event.target.value)
     }
 
-    let storeIsNull
+    const handleSwitchImg = () => {
+        store.selectAllItems()
+        setIsHide(!ishide)
+    }
+
+    const changeItemCheckbox = (e) => {
+        let itemId = e.target.parentNode.id.slice(
+            e.target.parentNode.id.indexOf('k') + 1
+        )
+        store.selectItemCheckbox(itemId, todoStore)
+        setTodoStore(store.getStore())
+    }
+
+    let storeItemsListis
     if (store.getStore()) {
-        storeIsNull = (
+        storeItemsListis = (
             <ItemsList
                 className={'todoApp__itemlist'}
                 items={store.getStore()}
+                changeItemCheckbox={changeItemCheckbox}
             />
         )
     } else {
-        storeIsNull = null
+        storeItemsListis = null
     }
 
     return (
@@ -47,13 +64,15 @@ const MainPage = () => {
             <div className={'todoApp'}>
                 <div className="task__wrapper">
                     <Task
+                        ishide={ishide}
+                        handleSwitchImg={handleSwitchImg}
                         className={'task__input'}
                         onSubmitInput={onSubmitInput}
                         handleSubmit={handleSubmit}
                         value={todo}
                     />
 
-                    {storeIsNull}
+                    {storeItemsListis}
 
                     <div>
                         <i>filters wil be here</i>

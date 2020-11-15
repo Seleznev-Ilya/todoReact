@@ -19,6 +19,16 @@ function Store(storeName) {
         return item
     }
 
+    this.selectItemCheckbox = function (id) {
+        const storeArr = this.getStore()
+        storeArr.forEach((item) => {
+            if (item.id === +id) {
+                item.checkbox = !item.checkbox
+            }
+        })
+        this.setStore(storeArr)
+    }
+
     this.selectAllItems = function () {
         const arrStore = this.getStore()
         const isAnyCheckFalse = arrStore.find((item) => item.checkbox === false)

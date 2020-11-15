@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 import InputMain from '../InputMain/index'
 import DeleteCrossButton from '../DeleteCrossButton/index'
@@ -7,9 +7,9 @@ import uncheck from '../../images/uncheck.svg'
 import cross from '../../images/cross.svg'
 import Store from '../../store/index'
 
-const Item = ({ className, itemObj }) => {
+const Item = ({ className, itemObj, changeItemCheckbox }) => {
     /* console.log('itemObj', itemObj) */
-    const [isHideCheckbox, setIsHideCheckbox] = useState(itemObj.checkbox)
+    // const [isHideCheckbox, setIsHideCheckbox] = useState(itemObj.checkbox)
     /* console.log('isHideCheckbox', isHideCheckbox) */
     const [isHideForm, setIsHideForm] = useState(true)
     // const [isHideForm, setIsHideForm] = useState(itemObj.checkbox)
@@ -33,9 +33,9 @@ const Item = ({ className, itemObj }) => {
         setTodoItem(event.target.value)
     }
 
-    const handleSwitchImg = () => {
-        setIsHideCheckbox(!isHideCheckbox)
-    }
+    // const handleSwitchImg = () => {
+    //     setIsHideCheckbox(!isHideCheckbox)
+    // }
     const handleSwitchItemtoForm = (event) => {
         setTodoItem(store.getItemObj(+event.target.id).value)
         setIsHideForm(!isHideForm)
@@ -58,28 +58,31 @@ const Item = ({ className, itemObj }) => {
                 onBlur={onSubmitInput}
             />
             <div className={isHideForm ? 'item' : 'item hide'}>
-                <div className="item__checkbox-wrapper ">
+                <div
+                    className="item__checkbox-wrapper "
+                    id={'check' + itemObj.id}
+                >
                     <img
                         src={check}
                         alt="check"
                         className={
-                            // itemObj.checkbox
-                            isHideCheckbox
-                                ? 'check_' + className + ' checkbox'
+                            itemObj.checkbox
+                                ? // isHideCheckbox
+                                  'check_' + className + ' checkbox'
                                 : 'check_' + className + ' checkbox hide'
                         }
-                        onClick={handleSwitchImg}
+                        onClick={changeItemCheckbox}
                     />
                     <img
                         src={uncheck}
                         alt="uncheck"
                         className={
-                            // itemObj.checkbox
-                            isHideCheckbox
-                                ? 'uncheck_' + className + ' checkbox hide'
+                            itemObj.checkbox
+                                ? // isHideCheckbox
+                                  'uncheck_' + className + ' checkbox hide'
                                 : 'uncheck_' + className + ' checkbox'
                         }
-                        onClick={handleSwitchImg}
+                        onClick={changeItemCheckbox}
                     />
                 </div>
                 <div
