@@ -7,7 +7,12 @@ import uncheck from '../../images/uncheck.svg'
 import cross from '../../images/cross.svg'
 import Store from '../../store/index'
 
-const Item = ({ className, itemObj, changeItemCheckbox }) => {
+const Item = ({
+    className,
+    itemObj,
+    changeItemCheckbox,
+    deleteItemCheckbox,
+}) => {
     /* console.log('itemObj', itemObj) */
     // const [isHideCheckbox, setIsHideCheckbox] = useState(itemObj.checkbox)
     /* console.log('isHideCheckbox', isHideCheckbox) */
@@ -66,7 +71,7 @@ const Item = ({ className, itemObj, changeItemCheckbox }) => {
                         src={check}
                         alt="check"
                         className={
-                            itemObj.checkbox
+                            !itemObj.checkbox
                                 ? // isHideCheckbox
                                   'check_' + className + ' checkbox'
                                 : 'check_' + className + ' checkbox hide'
@@ -77,7 +82,7 @@ const Item = ({ className, itemObj, changeItemCheckbox }) => {
                         src={uncheck}
                         alt="uncheck"
                         className={
-                            itemObj.checkbox
+                            !itemObj.checkbox
                                 ? // isHideCheckbox
                                   'uncheck_' + className + ' checkbox hide'
                                 : 'uncheck_' + className + ' checkbox'
@@ -93,7 +98,12 @@ const Item = ({ className, itemObj, changeItemCheckbox }) => {
                     {todoItemValue}
                 </div>
 
-                <DeleteCrossButton src={cross} className={'cross'} />
+                <DeleteCrossButton
+                    src={cross}
+                    className={'cross'}
+                    id={'cross' + itemObj.id}
+                    deleteItemCheckbox={deleteItemCheckbox}
+                />
             </div>
         </div>
     )

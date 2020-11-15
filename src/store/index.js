@@ -11,12 +11,33 @@ function Store(storeName) {
         return this.storage.storeCur
     }
 
+    this.deleteStore = function () {
+        this.setStore(null)
+    }
+
     this.getItemObj = function (id) {
         const arr = this.getStore()
         const item = arr.find((item) => {
             return item.id === id
         })
         return item
+    }
+
+    this.deleteItemCheckbox = function (id) {
+        const storeArr = this.getStore()
+        let indexId
+
+        storeArr.forEach((item, index) => {
+            if (item.id === +id) {
+                indexId = index
+            }
+        })
+        storeArr.splice(indexId, 1)
+        if (this.getStore().length) {
+            this.setStore(storeArr)
+        } else {
+            this.deleteStore()
+        }
     }
 
     this.selectItemCheckbox = function (id) {
@@ -52,7 +73,6 @@ function Store(storeName) {
             }
         })
         this.setStore(arrStore)
-        // return arrStore
     }
 
     this.sync = function (arg) {

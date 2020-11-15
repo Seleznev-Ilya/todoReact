@@ -1,7 +1,12 @@
 import React from 'react'
 import Item from '../Item/index'
 
-const ItemsList = ({ className, items, changeItemCheckbox }) => {
+const ItemsList = ({
+    className,
+    items,
+    changeItemCheckbox,
+    deleteItemCheckbox,
+}) => {
     return (
         <div className={className}>
             {items.map((item) => (
@@ -10,6 +15,7 @@ const ItemsList = ({ className, items, changeItemCheckbox }) => {
                     key={item.id}
                     itemObj={item}
                     changeItemCheckbox={changeItemCheckbox}
+                    deleteItemCheckbox={deleteItemCheckbox}
                 />
             ))}
         </div>

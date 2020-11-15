@@ -41,7 +41,17 @@ const MainPage = () => {
         let itemId = e.target.parentNode.id.slice(
             e.target.parentNode.id.indexOf('k') + 1
         )
-        store.selectItemCheckbox(itemId, todoStore)
+        store.selectItemCheckbox(itemId)
+        setTodoStore(store.getStore())
+        // store.deleteItemCheckbox(itemId)
+    }
+
+    const deleteItemCheckbox = (e) => {
+        let itemId = e.target.parentNode.id.slice(
+            e.target.parentNode.id.indexOf('s') + 2
+        )
+
+        store.deleteItemCheckbox(itemId)
         setTodoStore(store.getStore())
     }
 
@@ -52,6 +62,7 @@ const MainPage = () => {
                 className={'todoApp__itemlist'}
                 items={store.getStore()}
                 changeItemCheckbox={changeItemCheckbox}
+                deleteItemCheckbox={deleteItemCheckbox}
             />
         )
     } else {
@@ -73,10 +84,6 @@ const MainPage = () => {
                     />
 
                     {storeItemsListis}
-
-                    <div>
-                        <i>filters wil be here</i>
-                    </div>
                 </div>
             </div>
         </>
