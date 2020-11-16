@@ -42,6 +42,7 @@ const Item = ({
     //     setIsHideCheckbox(!isHideCheckbox)
     // }
     const handleSwitchItemtoForm = (event) => {
+        console.log(event.target)
         setTodoItem(store.getItemObj(+event.target.id).value)
         setIsHideForm(!isHideForm)
         setIsHideForm(false)

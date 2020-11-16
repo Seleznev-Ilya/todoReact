@@ -11,6 +11,7 @@ const Task = ({
     value,
     handleSwitchImg,
     ishide,
+    onBlurTodo,
 }) => {
     const store = new Store('Storage')
     return (
@@ -32,6 +33,7 @@ const Task = ({
                 handleSubmit={handleSubmit}
                 value={value}
                 holder={'what need to be done ?'}
+                onBlur={onBlurTodo}
             />
         </div>
     )

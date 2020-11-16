@@ -11,8 +11,19 @@ function Store(storeName) {
         return this.storage.storeCur
     }
 
-    this.deleteStore = function () {
-        this.setStore(null)
+    this.clearAllCompleted = function () {
+        const arr = this.getStore()
+        const items = arr.filter((item) => {
+            return item.checkbox === false
+        })
+        this.setStore(items)
+    }
+    this.getNumberActiveItems = function () {
+        const arr = this.getStore()
+        const items = arr.filter((item) => {
+            return item.checkbox === false
+        })
+        return items
     }
 
     this.getItemObj = function (id) {
