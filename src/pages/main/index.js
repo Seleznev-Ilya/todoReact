@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import ModalWindow from '../../components/ModalWindow/index'
 import Task from '../../components/Task/index'
 import ItemsList from '../../components/ItemsList/index'
 import Filters from '../../components/Filters/index'
@@ -17,6 +18,8 @@ const MainPage = () => {
     const [todoStore, setTodoStore] = useState(store.getStore())
 
     const [conditionState, setConditionState] = useState(condition.getStore())
+    const [confirmDelete, setConfirmDelete] = useState(false)
+    const [answer, setAnswer] = useState(false)
 
     const onSubmitInput = (event) => {
         event.preventDefault()
@@ -30,13 +33,14 @@ const MainPage = () => {
         if (todo.trim() !== '') {
             store.sync([newItem])
         }
+
         setTodo('')
         setTodoStore(store.getStore())
-        // setIsHide(!!todoStore)
     }
 
     const handleSubmit = (event) => {
         event.preventDefault()
+
         setTodo(event.target.value)
         setTodoStore(store.getStore())
         setIsHide(!!todoStore)
@@ -44,28 +48,40 @@ const MainPage = () => {
 
     const handleSwitchImg = () => {
         store.selectAllItems()
+
         setIsHide(!ishide)
         setTodoStore(store.getStore())
     }
 
     const changeItemCheckbox = (e) => {
-        let itemId = e.target.parentNode.id.slice(
+        const itemId = e.target.parentNode.id.slice(
             e.target.parentNode.id.indexOf('k') + 1
         )
+
         store.selectItemCheckbox(itemId)
+
         setTodoStore(store.getStore())
         setIsHide(!!todoStore)
     }
+    //+++++++ ==++++++ =++++++++=+++++++
 
-    const deleteItemCheckbox = (e) => {
-        let itemId = e.target.parentNode.id.slice(
-            e.target.parentNode.id.indexOf('s') + 2
-        )
-
-        store.deleteItemCheckbox(itemId)
-        setTodoStore(store.getStore())
-        setIsHide(!!todoStore)
+    const deleteItemCheckbox = (itemObj) => {
+        setAnswer(itemObj)
+        closeModelWindow()
     }
+
+    const closeModelWindow = () => {
+        setConfirmDelete(!confirmDelete)
+    }
+
+    const onButtonConfirm = () => {
+        store.deleteItemCheckbox(answer.id)
+        setConfirmDelete(!confirmDelete)
+    }
+    const onButtonCansel = () => {
+        setConfirmDelete(!confirmDelete)
+    }
+    //+++++++ ==++++++ =++++++++=+++++++
 
     const clearAllCompleted = () => {
         store.clearAllCompleted()
@@ -76,39 +92,20 @@ const MainPage = () => {
 
     const handleCondition = (e) => {
         condition.setStore(+e.target.parentNode.id)
+
         setConditionState(+e.target.parentNode.id)
-    }
-
-    let storeItemsListis, storeFilters
-    if (store.getStore()) {
-        storeItemsListis = (
-            <ItemsList
-                className={'todoApp__itemlist'}
-                // items={store.getStore()}
-                items={storeFiltered(store.getStore(), condition.getStore())}
-                changeItemCheckbox={changeItemCheckbox}
-                deleteItemCheckbox={deleteItemCheckbox}
-            />
-        )
-    } else {
-        storeItemsListis = null
-    }
-
-    if (store.getStore()) {
-        storeFilters = (
-            <Filters
-                className="task__filres"
-                clearAll={clearAllCompleted}
-                handleCondition={handleCondition}
-                conditionState={conditionState}
-            />
-        )
-    } else {
-        storeFilters = null
     }
 
     return (
         <>
+            {confirmDelete ? (
+                <ModalWindow
+                    answer={store.getStoreItem(answer.id)}
+                    closeModelWindow={closeModelWindow}
+                    onButtonConfirm={onButtonConfirm}
+                    onButtonCansel={onButtonCansel}
+                />
+            ) : null}
             <h1>Todo list</h1>
             <div className={'todoApp'}>
                 <div className="task__wrapper">
@@ -119,12 +116,26 @@ const MainPage = () => {
                         onSubmitInput={onSubmitInput}
                         handleSubmit={handleSubmit}
                         value={todo}
-                        // onBlurTodo={onSubmitInput}
                     />
-
-                    {storeItemsListis}
-
-                    {storeFilters}
+                    {store.getStore() ? (
+                        <>
+                            <ItemsList
+                                className={'todoApp__itemlist'}
+                                items={storeFiltered(
+                                    store.getStore(),
+                                    condition.getStore()
+                                )}
+                                changeItemCheckbox={changeItemCheckbox}
+                                deleteItemCheckbox={deleteItemCheckbox}
+                            />
+                            <Filters
+                                className="task__filres"
+                                clearAll={clearAllCompleted}
+                                handleCondition={handleCondition}
+                                conditionState={conditionState}
+                            />
+                        </>
+                    ) : null}
                 </div>
             </div>
         </>

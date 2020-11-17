@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 
 import InputMain from '../InputMain/index'
 import DeleteCrossButton from '../DeleteCrossButton/index'
-import check from '../../images/check.svg'
-import uncheck from '../../images/uncheck.svg'
-import cross from '../../images/cross.svg'
+import checkImg from '../../images/check.svg'
+import uncheckImg from '../../images/uncheck.svg'
+import crossImg from '../../images/cross.svg'
 import Store from '../../store/index'
 
 const Item = ({
@@ -14,6 +14,7 @@ const Item = ({
     deleteItemCheckbox,
 }) => {
     const [isHideForm, setIsHideForm] = useState(true)
+
     const [todoItemId, setTodoItemId] = useState(0)
     const [todoItem, setTodoItem] = useState('')
     const [todoItemValue, setTodoItemValue] = useState(itemObj.value)
@@ -21,10 +22,16 @@ const Item = ({
 
     const onSubmitInput = (event) => {
         event.preventDefault()
-        if (todoItem.trim() !== '') {
-            store.setItemData(todoItem, todoItemId)
-            setTodoItemValue(todoItem)
+
+        if (!todoItem.trim()) {
+            handleDeleteTask(todoItemId)()
+
+            return
         }
+
+        store.setItemData(todoItem, todoItemId)
+
+        setTodoItemValue(todoItem)
         setIsHideForm(true)
     }
 
@@ -38,6 +45,10 @@ const Item = ({
         setTodoItem(store.getItemObj(+event.target.id).value)
         setIsHideForm(!isHideForm)
         setIsHideForm(false)
+    }
+
+    const handleDeleteTask = (id) => () => {
+        deleteItemCheckbox(id)
     }
 
     return (
@@ -57,7 +68,7 @@ const Item = ({
                     id={'check' + itemObj.id}
                 >
                     <img
-                        src={check}
+                        src={checkImg}
                         alt="check"
                         className={
                             !itemObj.checkbox
@@ -67,7 +78,7 @@ const Item = ({
                         onClick={changeItemCheckbox}
                     />
                     <img
-                        src={uncheck}
+                        src={uncheckImg}
                         alt="uncheck"
                         className={
                             !itemObj.checkbox
@@ -86,10 +97,10 @@ const Item = ({
                 </div>
 
                 <DeleteCrossButton
-                    src={cross}
+                    src={crossImg}
                     className={'cross'}
                     id={'cross' + itemObj.id}
-                    deleteItemCheckbox={deleteItemCheckbox}
+                    deleteItemCheckbox={handleDeleteTask(itemObj)}
                 />
             </div>
         </div>

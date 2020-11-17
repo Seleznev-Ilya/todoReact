@@ -1,14 +1,20 @@
 function Store(storeName) {
-    this.storage = {
-        storeCur: JSON.parse(localStorage.getItem(storeName)),
-    }
+    this.storage = JSON.parse(localStorage.getItem(storeName))
 
     this.setStore = function (arg) {
         localStorage.setItem(storeName, JSON.stringify(arg))
     }
 
     this.getStore = function () {
-        return this.storage.storeCur
+        return this.storage
+    }
+
+    this.getStoreItem = function (id) {
+        const arr = this.getStore()
+        arr.find((item) => {
+            return item.id === id
+        })
+        return arr[0]
     }
 
     this.clearAllCompleted = function () {
@@ -35,6 +41,9 @@ function Store(storeName) {
             return item.id === id
         })
         return item
+    }
+    this.deleteStore = () => {
+        this.setStore(null)
     }
 
     this.deleteItemCheckbox = function (id) {
@@ -86,7 +95,14 @@ function Store(storeName) {
                 item.value = arg
             }
         })
-        this.setStore(arrStore)
+
+        if (arg.trim() === '') {
+            this.deleteItemCheckbox(id)
+        } else {
+            this.setStore(arrStore)
+        }
+
+        // this.setStore(arrStore)
     }
 
     this.sync = function (arg) {

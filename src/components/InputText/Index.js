@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 
 const InputText = ({ value, handleSubmit, holder, inputClassName, onBlur }) => {
     const textInput = React.createRef()
+
     useEffect(() => {
         textInput.current.focus()
     })
@@ -15,7 +16,6 @@ const InputText = ({ value, handleSubmit, holder, inputClassName, onBlur }) => {
             placeholder={holder}
             value={value}
             onChange={handleSubmit}
-            // autoFocus
         />
     )
 }
