@@ -4,14 +4,19 @@ import Task from '../../components/Task/index'
 import ItemsList from '../../components/ItemsList/index'
 import Filters from '../../components/Filters/index'
 import Store from '../../store/index'
+import storeFiltered from '../../store/storeFiltered/index'
 import './styles.scss'
 
 const MainPage = () => {
     const store = new Store('Storage')
-    const [todo, setTodo] = useState('')
+    const condition = new Store('Condition')
+    condition.setStore(Number(condition.getStore()))
 
+    const [todo, setTodo] = useState('')
     const [ishide, setIsHide] = useState(!store.getStore())
     const [todoStore, setTodoStore] = useState(store.getStore())
+
+    const [conditionState, setConditionState] = useState(condition.getStore())
 
     const onSubmitInput = (event) => {
         event.preventDefault()
@@ -24,10 +29,10 @@ const MainPage = () => {
 
         if (todo.trim() !== '') {
             store.sync([newItem])
-            setTodo('')
         }
+        setTodo('')
         setTodoStore(store.getStore())
-        setIsHide(!!todoStore)
+        // setIsHide(!!todoStore)
     }
 
     const handleSubmit = (event) => {
@@ -69,12 +74,18 @@ const MainPage = () => {
         setIsHide(!!todoStore)
     }
 
+    const handleCondition = (e) => {
+        condition.setStore(+e.target.parentNode.id)
+        setConditionState(+e.target.parentNode.id)
+    }
+
     let storeItemsListis, storeFilters
     if (store.getStore()) {
         storeItemsListis = (
             <ItemsList
                 className={'todoApp__itemlist'}
-                items={store.getStore()}
+                // items={store.getStore()}
+                items={storeFiltered(store.getStore(), condition.getStore())}
                 changeItemCheckbox={changeItemCheckbox}
                 deleteItemCheckbox={deleteItemCheckbox}
             />
@@ -85,7 +96,12 @@ const MainPage = () => {
 
     if (store.getStore()) {
         storeFilters = (
-            <Filters className="task__filres" clearAll={clearAllCompleted} />
+            <Filters
+                className="task__filres"
+                clearAll={clearAllCompleted}
+                handleCondition={handleCondition}
+                conditionState={conditionState}
+            />
         )
     } else {
         storeFilters = null

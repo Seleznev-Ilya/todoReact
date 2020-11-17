@@ -13,11 +13,7 @@ const Item = ({
     changeItemCheckbox,
     deleteItemCheckbox,
 }) => {
-    /* console.log('itemObj', itemObj) */
-    // const [isHideCheckbox, setIsHideCheckbox] = useState(itemObj.checkbox)
-    /* console.log('isHideCheckbox', isHideCheckbox) */
     const [isHideForm, setIsHideForm] = useState(true)
-    // const [isHideForm, setIsHideForm] = useState(itemObj.checkbox)
     const [todoItemId, setTodoItemId] = useState(0)
     const [todoItem, setTodoItem] = useState('')
     const [todoItemValue, setTodoItemValue] = useState(itemObj.value)
@@ -38,20 +34,12 @@ const Item = ({
         setTodoItem(event.target.value)
     }
 
-    // const handleSwitchImg = () => {
-    //     setIsHideCheckbox(!isHideCheckbox)
-    // }
     const handleSwitchItemtoForm = (event) => {
-        console.log(event.target)
         setTodoItem(store.getItemObj(+event.target.id).value)
         setIsHideForm(!isHideForm)
         setIsHideForm(false)
     }
 
-    // useEffect(() => {
-    //     console.log('i323233232323sHideCheckbox', isHideCheckbox)
-    //     handleSwitchImg()
-    // }, [itemObj.checkbox])
     return (
         <div className={'item__style item__' + className + ' border_bottom'}>
             <InputMain
@@ -73,8 +61,7 @@ const Item = ({
                         alt="check"
                         className={
                             !itemObj.checkbox
-                                ? // isHideCheckbox
-                                  'check_' + className + ' checkbox'
+                                ? 'check_' + className + ' checkbox'
                                 : 'check_' + className + ' checkbox hide'
                         }
                         onClick={changeItemCheckbox}
@@ -84,8 +71,7 @@ const Item = ({
                         alt="uncheck"
                         className={
                             !itemObj.checkbox
-                                ? // isHideCheckbox
-                                  'uncheck_' + className + ' checkbox hide'
+                                ? 'uncheck_' + className + ' checkbox hide'
                                 : 'uncheck_' + className + ' checkbox'
                         }
                         onClick={changeItemCheckbox}

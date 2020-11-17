@@ -1,11 +1,16 @@
 import React from 'react'
 
-const SubFilters = ({ className }) => {
+const SubFilters = ({ item, index, handleCondition, conditionState }) => {
+    let getActiveState
+    if (conditionState === index) {
+        getActiveState = item + ' active'
+    } else {
+        getActiveState = item
+    }
+
     return (
-        <div className={className}>
-            <p>1</p>
-            <p>2</p>
-            <p>3</p>
+        <div className={getActiveState} id={index} onClick={handleCondition}>
+            <p>{item}</p>
         </div>
     )
 }

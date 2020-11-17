@@ -104,13 +104,30 @@
         padding: 10px 7px;
         font-size: 14px;
         .numberItems {
+            padding: 1px;
         }
         .filter__condition {
+            font-size: 13px;
             display: flex;
+            justify-content: space-around;
+            padding: 0 2px;
+            div {
+                margin: 0 5px;
+                border: 1px solid transparent;
+                border-radius: 3px;
+                padding: 1px;
+                cursor: pointer;
+            }
+            div:hover {
+                border: 1px solid rgba(255, 127, 80, 0.5);
+            }
+            .active {
+                border: 1px solid rgba(255, 127, 80, 0.5);
+            }
         }
         .clear {
+            padding: 1px 1px 2px 1px;
             cursor: pointer;
-            padding-bottom: 2px;
         }
         .clear:hover {
             border-bottom: 1px rgba(112, 112, 112, 0.2) solid;

@@ -13,9 +13,12 @@ function Store(storeName) {
 
     this.clearAllCompleted = function () {
         const arr = this.getStore()
-        const items = arr.filter((item) => {
+        let items = arr.filter((item) => {
             return item.checkbox === false
         })
+        if (!items.length) {
+            items = null
+        }
         this.setStore(items)
     }
     this.getNumberActiveItems = function () {
