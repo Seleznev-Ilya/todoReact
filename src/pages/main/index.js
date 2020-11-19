@@ -1,111 +1,94 @@
 import React, { useState } from 'react'
-
-import ModalWindow from '../../components/ModalWindow/index'
+import Modal from '../../components/Modal/index'
 import Task from '../../components/Task/index'
 import ItemsList from '../../components/ItemsList/index'
 import Filters from '../../components/Filters/index'
 import Store from '../../store/index'
-import storeFiltered from '../../store/storeFiltered/index'
+import { FILTER } from '../../constants/filter'
 import './styles.scss'
 
 const MainPage = () => {
     const store = new Store('Storage')
     const condition = new Store('Condition')
-    condition.setStore(Number(condition.getStore()))
 
     const [todo, setTodo] = useState('')
     const [ishide, setIsHide] = useState(!store.getStore())
     const [todoStore, setTodoStore] = useState(store.getStore())
 
-    const [conditionState, setConditionState] = useState(condition.getStore())
+    const [conditionState, setConditionState] = useState(FILTER.ALL)
     const [confirmDelete, setConfirmDelete] = useState(false)
     const [answer, setAnswer] = useState(false)
 
-    const onSubmitInput = (event) => {
-        event.preventDefault()
-
+    const onSubmitInput = (submitValue) => {
         const newItem = {
             id: new Date().getTime(),
-            value: todo,
+            value: submitValue,
             checkbox: false,
         }
-
-        if (todo.trim() !== '') {
+        if (submitValue.trim() !== '') {
             store.sync([newItem])
         }
-
-        setTodo('')
+        setTodo(todo)
         setTodoStore(store.getStore())
+        setIsHide(todoStore)
     }
 
-    const handleSubmit = (event) => {
-        event.preventDefault()
+    const onSubmitItemsInput = () => {
+        setTodoStore(store.getStore())
+        setIsHide(todoStore)
+        setTodo(todo)
+    }
 
-        setTodo(event.target.value)
+    const onChangeInputValue = (inputValue) => {
+        console.log(inputValue)
+        setTodo(inputValue)
         setTodoStore(store.getStore())
         setIsHide(!!todoStore)
     }
 
     const handleSwitchImg = () => {
         store.selectAllItems()
-
         setIsHide(!ishide)
         setTodoStore(store.getStore())
     }
 
-    const changeItemCheckbox = (e) => {
-        const itemId = e.target.parentNode.id.slice(
-            e.target.parentNode.id.indexOf('k') + 1
-        )
-
-        store.selectItemCheckbox(itemId)
-
-        setTodoStore(store.getStore())
-        setIsHide(!!todoStore)
-    }
-    //+++++++ ==++++++ =++++++++=+++++++
-
     const deleteItemCheckbox = (itemObj) => {
         setAnswer(itemObj)
-        closeModelWindow()
-    }
-
-    const closeModelWindow = () => {
-        setConfirmDelete(!confirmDelete)
+        closeModalWindow()
     }
 
     const onButtonConfirm = () => {
         store.deleteItemCheckbox(answer.id)
+        closeModalWindow()
+    }
+    const closeModalWindow = () => {
         setConfirmDelete(!confirmDelete)
     }
-    const onButtonCansel = () => {
-        setConfirmDelete(!confirmDelete)
-    }
-    //+++++++ ==++++++ =++++++++=+++++++
 
     const clearAllCompleted = () => {
         store.clearAllCompleted()
-
         setTodoStore(store.getStore())
         setIsHide(!!todoStore)
     }
 
-    const handleCondition = (e) => {
-        condition.setStore(+e.target.parentNode.id)
+    const handleCondition = (currentFilter) => {
+        condition.setStore(currentFilter)
+        setConditionState(currentFilter)
+    }
 
-        setConditionState(+e.target.parentNode.id)
+    const storeFiltered = (store, currentState) => {
+        let arrStore
+        currentState === 'all'
+            ? (arrStore = store)
+            : (arrStore = store.filter((item) => {
+                  return item.checkbox === (currentState === 'completed')
+              }))
+
+        return arrStore
     }
 
     return (
         <>
-            {confirmDelete ? (
-                <ModalWindow
-                    answer={store.getStoreItem(answer.id)}
-                    closeModelWindow={closeModelWindow}
-                    onButtonConfirm={onButtonConfirm}
-                    onButtonCansel={onButtonCansel}
-                />
-            ) : null}
             <h1>Todo list</h1>
             <div className={'todoApp'}>
                 <div className="task__wrapper">
@@ -114,8 +97,7 @@ const MainPage = () => {
                         handleSwitchImg={handleSwitchImg}
                         className={'task__input'}
                         onSubmitInput={onSubmitInput}
-                        handleSubmit={handleSubmit}
-                        value={todo}
+                        onChangeInputValue={onChangeInputValue}
                     />
                     {store.getStore() ? (
                         <>
@@ -125,19 +107,28 @@ const MainPage = () => {
                                     store.getStore(),
                                     condition.getStore()
                                 )}
-                                changeItemCheckbox={changeItemCheckbox}
+                                onSubmitItemsInput={onSubmitItemsInput}
                                 deleteItemCheckbox={deleteItemCheckbox}
                             />
                             <Filters
                                 className="task__filres"
                                 clearAll={clearAllCompleted}
-                                handleCondition={handleCondition}
+                                onSelect={handleCondition}
                                 conditionState={conditionState}
                             />
                         </>
                     ) : null}
                 </div>
             </div>
+            {confirmDelete ? (
+                <Modal
+                    className={'modal'}
+                    title={'Do you want to delete?'}
+                    description={answer.value}
+                    onClose={closeModalWindow}
+                    onConfirm={onButtonConfirm}
+                />
+            ) : null}
         </>
     )
 }

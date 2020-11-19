@@ -1,13 +1,7 @@
 import React, { useState } from 'react'
 import InputText from '../InputText/Index'
 
-const InputMain = ({
-    className,
-    onSubmitInput,
-    inputClassName,
-    holder,
-    onBlur,
-}) => {
+const InputItem = ({ className, onSubmitInput }) => {
     const [value, setValue] = useState('')
 
     const onChangeInput = (event) => {
@@ -15,25 +9,22 @@ const InputMain = ({
         setValue(event.target.value)
     }
 
-    const mainSubmit = (event) => {
+    const itemSubmit = (event) => {
         event.preventDefault()
         onSubmitInput(value)
-        setValue('')
     }
 
     return (
         <div className={className}>
-            <form onSubmit={mainSubmit}>
+            <form onSubmit={itemSubmit}>
                 <InputText
-                    onBlur={onBlur}
-                    inputClassName={inputClassName}
-                    value={value}
-                    holder={holder}
                     onChangeInput={onChangeInput}
+                    onBlur={itemSubmit}
+                    value={value}
                 />
             </form>
         </div>
     )
 }
 
-export default InputMain
+export default InputItem

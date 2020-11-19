@@ -1,6 +1,12 @@
 import React, { useEffect } from 'react'
 
-const InputText = ({ value, handleSubmit, holder, inputClassName, onBlur }) => {
+const InputText = ({
+    value,
+    onChangeInput,
+    holder,
+    inputClassName,
+    onBlur,
+}) => {
     const textInput = React.createRef()
 
     useEffect(() => {
@@ -15,7 +21,7 @@ const InputText = ({ value, handleSubmit, holder, inputClassName, onBlur }) => {
             type="text"
             placeholder={holder}
             value={value}
-            onChange={handleSubmit}
+            onChange={onChangeInput}
         />
     )
 }

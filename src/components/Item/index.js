@@ -1,10 +1,9 @@
 import React, { useState, useCallback } from 'react'
-
-import InputMain from '../InputMain/index'
+import InputItem from '../InputItem/index'
 import DeleteCrossButton from '../DeleteCrossButton/index'
-import checkImg from '../../images/check.svg'
-import uncheckImg from '../../images/uncheck.svg'
-import crossImg from '../../images/cross.svg'
+import checkImg from '../../asset/images/check.svg'
+import uncheckImg from '../../asset/images/uncheck.svg'
+import crossImg from '../../asset/images/cross.svg'
 import Store from '../../store/index'
 
 const Item = ({
@@ -12,38 +11,21 @@ const Item = ({
     itemObj,
     changeItemCheckbox,
     deleteItemCheckbox,
+    onSubmitItemsInput,
 }) => {
     const [isHideForm, setIsHideForm] = useState(true)
-
-    const [todoItemId, setTodoItemId] = useState(0)
-    const [todoItem, setTodoItem] = useState('')
-    const [todoItemValue, setTodoItemValue] = useState(itemObj.value)
     const store = new Store('Storage')
+    const onClickItemCheckbox = useCallback(() => {
+        changeItemCheckbox(itemObj)
+    }, [itemObj])
 
-    const onSubmitInput = (event) => {
-        event.preventDefault()
-
-        if (!todoItem.trim()) {
-            handleDeleteTask(todoItemId)()
-
-            return
-        }
-
-        store.setItemData(todoItem, todoItemId)
-
-        setTodoItemValue(todoItem)
+    const onSubmitInputValue = (submitValue) => {
+        store.setItemData(submitValue, itemObj.id)
         setIsHideForm(true)
+        onSubmitItemsInput()
     }
 
-    const handleSubmit = (event) => {
-        event.preventDefault()
-        setTodoItemId(+event.target.className)
-        setTodoItem(event.target.value)
-    }
-
-    const handleSwitchItemtoForm = (event) => {
-        setTodoItem(store.getItemObj(+event.target.id).value)
-        setIsHideForm(!isHideForm)
+    const handleSwitchItemtoForm = () => {
         setIsHideForm(false)
     }
 
@@ -52,54 +34,46 @@ const Item = ({
     }
 
     return (
-        <div className={'item__style item__' + className + ' border_bottom'}>
-            <InputMain
-                className={isHideForm ? 'item__input hide ' : 'item__input '}
+        <div className={`item__style item__${className} border_bottom`}>
+            <InputItem
+                className={`item__input
+                ${isHideForm ? ' hide ' : ''}`}
                 inputClassName={itemObj.id}
-                onSubmitInput={onSubmitInput}
-                handleSubmit={handleSubmit}
-                value={todoItem}
+                onSubmitInput={onSubmitInputValue}
+                value={itemObj.value}
                 holder={null}
-                onBlur={onSubmitInput}
             />
-            <div className={isHideForm ? 'item' : 'item hide'}>
+            <div
+                className={`item
+            ${isHideForm ? '' : ' hide'}`}
+            >
                 <div
                     className="item__checkbox-wrapper "
-                    id={'check' + itemObj.id}
+                    onClick={onClickItemCheckbox}
                 >
                     <img
                         src={checkImg}
                         alt="check"
-                        className={
-                            !itemObj.checkbox
-                                ? 'check_' + className + ' checkbox'
-                                : 'check_' + className + ' checkbox hide'
-                        }
-                        onClick={changeItemCheckbox}
+                        className={`checkbox 
+                        ${!itemObj.checkbox ? '' : ' hide'}`}
                     />
                     <img
                         src={uncheckImg}
                         alt="uncheck"
-                        className={
-                            !itemObj.checkbox
-                                ? 'uncheck_' + className + ' checkbox hide'
-                                : 'uncheck_' + className + ' checkbox'
-                        }
-                        onClick={changeItemCheckbox}
+                        className={`checkbox 
+                        ${!itemObj.checkbox ? 'hide' : ''}`}
                     />
                 </div>
                 <div
                     className="item__value"
-                    id={itemObj.id}
                     onDoubleClick={handleSwitchItemtoForm}
                 >
-                    {todoItemValue}
+                    {itemObj.value}
                 </div>
 
                 <DeleteCrossButton
                     src={crossImg}
                     className={'cross'}
-                    id={'cross' + itemObj.id}
                     deleteItemCheckbox={handleDeleteTask(itemObj)}
                 />
             </div>

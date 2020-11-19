@@ -1,36 +1,28 @@
 import React from 'react'
-
-import select from '../../images/select.svg'
-import unselect from '../../images/unselect.svg'
+import selectImg from '../../asset/images/select.svg'
+import unselectImg from '../../asset/images/unselect.svg'
 import Store from '../../store/index'
 
 const SelectAllButton = ({ className, handleSwitchImg, ishide }) => {
-    // const [ishide, setIsHide] = useState(true)
     const store = new Store('Storage')
-
-    // const handleSwitchImg = () => {
-    //     store.selectAllItems()
-    //     setIsHide(!ishide)
-    // }
 
     return (
         <div
-            className={store.getStore() ? className : className + ' opasity'}
+            className={`${className} 
+            ${store.getStore() ? '' : ' opasity'}`}
             onClick={handleSwitchImg}
         >
             <img
-                src={select}
+                src={selectImg}
                 alt="select"
-                className={
-                    ishide ? 'input__img select ' : 'input__img select hide'
-                }
+                className={`input__img select 
+                    ${ishide ? '' : ' hide'}`}
             />
             <img
-                src={unselect}
+                src={unselectImg}
                 alt="unselect"
-                className={
-                    ishide ? 'input__img unselect hide' : 'input__img unselect '
-                }
+                className={`input__img unselect 
+                   ${ishide ? ' hide' : ''}`}
             />
         </div>
     )

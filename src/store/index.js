@@ -11,10 +11,9 @@ function Store(storeName) {
 
     this.getStoreItem = function (id) {
         const arr = this.getStore()
-        arr.find((item) => {
+        return arr.find((item) => {
             return item.id === id
         })
-        return arr[0]
     }
 
     this.clearAllCompleted = function () {
@@ -51,7 +50,7 @@ function Store(storeName) {
         let indexId
 
         storeArr.forEach((item, index) => {
-            if (item.id === +id) {
+            if (item.id === id) {
                 indexId = index
             }
         })
@@ -66,7 +65,7 @@ function Store(storeName) {
     this.selectItemCheckbox = function (id) {
         const storeArr = this.getStore()
         storeArr.forEach((item) => {
-            if (item.id === +id) {
+            if (item.id === id) {
                 item.checkbox = !item.checkbox
             }
         })
@@ -101,8 +100,6 @@ function Store(storeName) {
         } else {
             this.setStore(arrStore)
         }
-
-        // this.setStore(arrStore)
     }
 
     this.sync = function (arg) {

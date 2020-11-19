@@ -8,21 +8,21 @@
     font-family: 'ubunto r';
     font-style: normal;
     font-weight: 400;
-    src: url('../fonts/Ubuntu-Regular.ttf');
+    src: url('../asset/fonts/Ubuntu-Regular.ttf');
 }
 
 @font-face {
     font-family: 'ubunto i';
     font-style: normal;
     font-weight: 400;
-    src: url('../fonts/Ubuntu-Italic.ttf');
+    src: url('../asset/fonts/Ubuntu-Italic.ttf');
 }
 
 @font-face {
     font-family: 'ubunto l';
     font-style: normal;
     font-weight: 400;
-    src: url('../fonts/Ubuntu-Light.ttf');
+    src: url('../asset/fonts/Ubuntu-Light.ttf');
 }
 p {
     font-family: 'ubunto r', sans-serif;
@@ -48,14 +48,23 @@ input:focus {
 }
 $w-cfm-height: 130px;
 $w-cfm-width: 250px;
-.window {
+.modal__wrapper {
     position: absolute;
     top: 0;
     left: 0;
+    background: rgba(36, 32, 32, 0.3);
     height: 100%;
     width: 100%;
-    background: rgba(36, 32, 32, 0.3);
-    .window__confirm {
+
+    .modal__background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background: inherit;
+    }
+    .modal {
         border-radius: 3px;
         padding: 5px;
         box-shadow: 0 3px 17px rgba(36, 32, 32, 0.6);
@@ -66,26 +75,26 @@ $w-cfm-width: 250px;
         width: $w-cfm-width;
         background: white;
         z-index: 2;
-        .cross {
-            box-shadow: inset 0 0 4px rgba(163, 13, 13, 0.6);
-            cursor: pointer;
-            position: absolute;
-            height: 5px;
-            right: 5px;
-            width: 13px;
-            height: auto;
-            padding: 0 2px;
-        }
-        .question {
+
+        .description {
             width: 80%;
-            margin: 40px auto;
+            margin: 8% auto;
             height: 20px;
             span {
                 color: gray;
-                font-size: 14px;
+                font-size: 18px;
             }
         }
-        .question__bittons {
+        .title {
+            width: 80%;
+            margin: 0 auto;
+            height: 20px;
+            span {
+                color: black;
+                font-size: 15px;
+            }
+        }
+        .modal__button {
             display: flex;
             justify-content: space-between;
             width: 66px;
@@ -94,4 +103,18 @@ $w-cfm-width: 250px;
             right: 10%;
         }
     }
+}
+.button {
+    cursor: pointer;
+    width: 30px;
+    height: 10px;
+    background: rgb(169, 179, 172);
+    border-radius: 3px;
+    height: fit-content;
+    padding: 2px;
+    text-align: center;
+}
+.button:hover {
+    box-shadow: inset 0 0 5px lightblue;
+    background: rgb(216, 235, 222);
 }

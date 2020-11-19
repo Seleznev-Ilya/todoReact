@@ -1,5 +1,4 @@
 import React from 'react'
-
 import InputMain from '../InputMain/index'
 import SelectAllButton from '../SelectAllButton/index'
 import Store from '../../store/index'
@@ -7,8 +6,7 @@ import Store from '../../store/index'
 const Task = ({
     className,
     onSubmitInput,
-    handleSubmit,
-    value,
+    onChangeInputValue,
     handleSwitchImg,
     ishide,
     onBlurTodo,
@@ -16,9 +14,8 @@ const Task = ({
     const store = new Store('Storage')
     return (
         <div
-            className={
-                !store.getStore() ? className : className + '  border_bottom'
-            }
+            className={`${className}
+                ${!store.getStore() ? '' : ' border_bottom'}`}
         >
             <SelectAllButton
                 ishide={ishide}
@@ -28,10 +25,8 @@ const Task = ({
 
             <InputMain
                 className={'input'}
-                inputClassName={null}
                 onSubmitInput={onSubmitInput}
-                handleSubmit={handleSubmit}
-                value={value}
+                onChangeInputValue={onChangeInputValue}
                 holder={'what need to be done ?'}
                 onBlur={onBlurTodo}
             />

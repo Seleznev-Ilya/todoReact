@@ -1,15 +1,19 @@
-import React from 'react'
+import React, { useState, useCallback } from 'react'
+import Store from '../../store/index'
 
-const SubFilters = ({ item, index, handleCondition, conditionState }) => {
-    let getActiveState
-    if (conditionState === index) {
-        getActiveState = item + ' active'
-    } else {
-        getActiveState = item
-    }
+const SubFilters = ({ item, onSelect }) => {
+    const condition = new Store('Condition')
+
+    const handleSelect = useCallback(() => {
+        onSelect(item)
+    }, [item])
+    const currentStore = condition.getStore()
 
     return (
-        <div className={getActiveState} id={index} onClick={handleCondition}>
+        <div
+            className={currentStore === item ? 'active' : ''}
+            onClick={handleSelect}
+        >
             <p>{item}</p>
         </div>
     )
